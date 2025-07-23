@@ -1,15 +1,134 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Map</title>
-  <style>
-    html, body { margin: 0; height: 100%; overflow: hidden; }
-    embed { width: 100%; height: 100%; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Friend</title> <!-- Changed title here -->
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font for better readability -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font to the body */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2d3748; /* Darker gray for track */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568; /* Darker gray for thumb */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* Even darker gray on hover */
+        }
+        /* Ensure iframes are responsive */
+        .pdf-container iframe {
+            display: block;
+            margin: auto;
+        }
+    </style>
 </head>
-<body>
-  <embed src="your-map.pdf" type="application/pdf" />
+<body class="min-h-screen bg-black text-gray-100 p-4 sm:p-6 lg:p-8"> <!-- Changed background to black and text to gray-100 -->
+
+    <header class="text-center mb-8">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-2"> <!-- Changed text to white -->
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500"> <!-- Adjusted gradient for better contrast on black -->
+                PDF Friend
+            </span>
+        </h1>
+        <p class="text-lg text-gray-400">Your compilation of PDF maps, easily searchable.</p> <!-- Adjusted text color -->
+    </header>
+
+    <div class="max-w-4xl mx-auto bg-gray-900 rounded-xl shadow-lg p-6 sm:p-8"> <!-- Adjusted background for content area -->
+        <!-- Search Bar -->
+        <div class="mb-6">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Search maps by keyword or title..."
+                class="w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition duration-200 ease-in-out text-lg"
+                aria-label="Search maps"
+            >
+        </div>
+
+        <!-- Map Display Area -->
+        <div id="maps-container" class="space-y-6">
+            
+      <div class="pdf-container my-8 p-4 bg-gray-800 rounded-lg shadow-md transition-all duration-300 ease-in-out" data-title="Pond_Trail_Update" data-keywords="pond_trail_update map document">
+        <h3 class="text-xl font-semibold mb-2 text-gray-100">Pond_Trail_Update.pdf</h3>
+        <iframe src="Pond_Trail_Update.pdf" class="w-full h-[600px] border-none rounded-md shadow-inner"></iframe> <!-- Removed encodeURIComponent here -->
+        <p class="text-sm text-gray-400 mt-2">File: Pond_Trail_Update.pdf</p>
+      </div>
+    
+
+      <div class="pdf-container my-8 p-4 bg-gray-800 rounded-lg shadow-md transition-all duration-300 ease-in-out" data-title="map-mount-major-trails" data-keywords="map-mount-major-trails map document">
+        <h3 class="text-xl font-semibold mb-2 text-gray-100">map-mount-major-trails.pdf</h3>
+        <iframe src="map-mount-major-trails.pdf" class="w-full h-[600px] border-none rounded-md shadow-inner"></iframe> <!-- Removed encodeURIComponent here -->
+        <p class="text-sm text-gray-400 mt-2">File: map-mount-major-trails.pdf</p>
+      </div>
+    
+
+      <div class="pdf-container my-8 p-4 bg-gray-800 rounded-lg shadow-md transition-all duration-300 ease-in-out" data-title="Lockes_Hills_KimballWildlifeForest_Trails_2025" data-keywords="lockes_hills_kimballwildlifeforest_trails_2025 map document">
+        <h3 class="text-xl font-semibold mb-2 text-gray-100">Lockes_Hills_KimballWildlifeForest_Trails_2025.pdf</h3>
+        <iframe src="Lockes_Hills_KimballWildlifeForest_Trails_2025.pdf" class="w-full h-[600px] border-none rounded-md shadow-inner"></iframe> <!-- Removed encodeURIComponent here -->
+        <p class="text-sm text-gray-400 mt-2">File: Lockes_Hills_KimballWildlifeForest_Trails_2025.pdf</p>
+      </div>
+    
+
+      <div class="pdf-container my-8 p-4 bg-gray-800 rounded-lg shadow-md transition-all duration-300 ease-in-out" data-title="weeks-forest-mappdf" data-keywords="weeks-forest-mappdf map document">
+        <h3 class="text-xl font-semibold mb-2 text-gray-100">weeks-forest-mappdf.pdf</h3>
+        <iframe src="weeks-forest-mappdf.pdf" class="w-full h-[600px] border-none rounded-md shadow-inner"></iframe> <!-- Removed encodeURIComponent here -->
+        <p class="text-sm text-gray-400 mt-2">File: weeks-forest-mappdf.pdf</p>
+      </div>
+    
+        </div>
+    </div>
+
+    <footer class="text-center mt-10 text-gray-500 text-sm">
+        <p>&copy; <span id="current-year"></span> PDF Friend. Created with PDFfriend.com.</p> <!-- Changed text here -->
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const searchInput = document.getElementById('search-input');
+        const mapContainers = document.querySelectorAll('.pdf-container'); // Select all PDF containers
+
+        /**
+         * Filters the maps based on the search term and shows/hides them.
+         */
+        function filterMaps() {
+            const searchTerm = searchInput.value.toLowerCase();
+            mapContainers.forEach(container => {
+                const title = container.dataset.title ? container.dataset.title.toLowerCase() : '';
+                const keywords = container.dataset.keywords ? container.dataset.keywords.toLowerCase() : '';
+                
+                if (title.includes(searchTerm) || keywords.includes(searchTerm)) {
+                    container.style.display = 'block'; // Show the container
+                } else {
+                    container.style.display = 'none'; // Hide the container
+                }
+            });
+        }
+
+        // Add event listener for real-time search as the user types
+        searchInput.addEventListener('input', filterMaps);
+
+        // Initial filter on load (in case search input has pre-filled value)
+        document.addEventListener('DOMContentLoaded', filterMaps);
+    </script>
 </body>
 </html>
+    
